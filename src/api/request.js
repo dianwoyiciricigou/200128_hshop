@@ -1,17 +1,21 @@
 // 请求函数模块
 import axios from 'axios'
+const baseURL = '/api'
 
-export function request(config) {
+export async function request(config) {
+    let hello;
     const instance = axios.create({
-        baseURL:'http://',
-        timeout:1000
+        baseURL:baseURL,
+        timeout:5000
     })
 
-    instance(config.baseConfig)
+    await instance(config.baseConfig)
     .then(res => {
-        config.success(res)
+        hello = config.success(res);
     })
     .catch(err => {
         config.failure(err)
     })
+    return  hello.data;
+    
 }

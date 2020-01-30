@@ -7,17 +7,20 @@
 
 <script>
 import footerGuide from './components/FooterGuide/FootGuide'
-import MSite from './pages/MSite/MSite'
-import Order from './pages/Order/Order'
-import Profile from './pages/Profile/Profile'
-import Search from './pages/Search/Search'
+import {reqFoodTypes} from './api'
+import { mapActions } from "vuex"
+
 export default {
+  
+  mounted () {
+    //this.$store.dispatch('getAddress')
+    this.getAddress();
+  },
+  methods:{
+    ...mapActions(['getAddress'])
+  },
   components:{
-    footerGuide,
-    MSite,
-    Order,
-    Profile,
-    Search
+    footerGuide
   }
 }
 </script>

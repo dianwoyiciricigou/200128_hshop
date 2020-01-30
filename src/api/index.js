@@ -4,12 +4,29 @@ import {request} from './request'
 
 // [1、根据经纬度获取位置详情](#1根据经纬度获取位置详情)<br/>
 export const reqAddress = (geohash) => request({
-    url:`/position/${geohash}`
+    baseConfig:{
+        url:`/position/${geohash}`
+    },
+    success:function(res){
+        return res
+    },
+    failure:function(err){
+        console.log(err)
+    }
 })
 
 // [2、获取食品分类列表](#2获取食品分类列表)<br/>
 export const reqFoodTypes = () => request({
-    url:`/index_category`
+    baseConfig:{
+        url:`/index_category`
+    },
+    success:function(res){
+        return res
+    },
+    failure:function(err){
+        console.log(err)
+    }
+
 })
 
 // [3、根据经纬度获取商铺列表](#3根据经纬度获取商铺列表)<br/>

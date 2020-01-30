@@ -3,7 +3,7 @@
     <div class="on">
       <section class="msite">
         <!--首页头部-->
-        <HeaderTop title="全椒前进小学和襄中北门中间巷口">
+        <HeaderTop :title="address.name">
           <template v-slot:left>
             <span class="header_search">
               <i class="iconfont icon-sousuo"></i>
@@ -136,7 +136,7 @@ import shopList from "../../components/shopList/shopList"
 
 import Swiper from 'swiper'
 import 'swiper/css/swiper.min.css'
-
+import { mapState } from "vuex";
 
 export default {
   mounted(){
@@ -148,6 +148,9 @@ export default {
       el: '.swiper-pagination',
     },
     })
+  },
+  computed:{
+    ...mapState(['address'])
   },
    components:{
      HeaderTop,
