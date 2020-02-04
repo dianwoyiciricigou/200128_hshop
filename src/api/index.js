@@ -31,56 +31,86 @@ export const reqFoodTypes = () => request({
 
 // [3、根据经纬度获取商铺列表](#3根据经纬度获取商铺列表)<br/>
 export const reqShops = (longitude,latitude) => request({
-    url:`/shops`,
-    params:{
-        longitude,latitude
-    }
+    baseConfig:{
+        url:`/shops`,
+        params:{
+            longitude,latitude
+        }
+    },
+    success:res=>res,
+    failure:err=>err
 })
 
 // [4、根据经纬度和关键字搜索商铺列表](#4根据经纬度和关键字搜索商铺列表)<br/>
 export const reqSearchShops = (geohash,keyword) => request({
-    url:`/search_shops`,
-    params:{
-        geohash,keyword
-    }
+    
+    baseConfig:{
+        url:`/search_shops`,
+        params:{
+            geohash,keyword
+        }
+    },
+    success:res=>res,
+    failure:err=>err
 })
 
-// [5、获取一次性验证码](#5获取一次性验证码)<br/>
-export const reqCaptcha = () => request({
-    url:`/captcha`
-})
 
 // [6、用户名密码登陆](#6用户名密码登陆)<br/>
 export const reqPwd = (name,pwd,captcha) => request({
-    url:`/captcha`,
-    methods:'post',
-    params:{
-        name,
-        pwd,
-        captcha
-    }
+    
+    baseConfig:{
+        url:`/login_pwd`,
+        methods:'post',
+        params:{
+            name,
+            pwd,
+            captcha
+        }
+    },
+    success:res=>res,
+    failure:err=>err
 })
 // [7、发送短信验证码](#7发送短信验证码)<br/>
 export const reqMessage = (phone) => request({
-    url:`/sendcode`,
-    params:{phone}
+    
+    baseConfig:{
+        url:`/sendcode`,
+        params:{phone}
+    },
+    success:res=>res,
+    failure:err=>err
 })
 // [8、手机号验证码登陆](#8手机号验证码登陆)<br/>
 export const reqPhone = (phone,code) => request({
-    url:`/captcha`,
-    methods:'post',
-    params:{
-        phone,
-        code
-    }
+    
+    baseConfig:{
+        url:`/login_sms`,
+        methods:'post',
+        params:{
+            phone,
+            code
+        }
+    },
+    success:res=>res,
+    failure:err=>err
 })
 // [9、根据会话获取用户信息](#9根据会话获取用户信息)<br/>
 export const reqUserinfo = () => request({
-    url:`/userinfo`
+    
+    baseConfig:{
+        url:`/userinfo`
+    },
+    success:res=>res,
+    failure:err=>err
 })
 // [10、用户登出](#10用户登出)<br/>
 export const reqLogout = () => request({
-    url:`/logout`
+    
+    baseConfig:{
+        url:`/logout`
+    },
+    success:res=>res,
+    failure:err=>err
 })
 
 
