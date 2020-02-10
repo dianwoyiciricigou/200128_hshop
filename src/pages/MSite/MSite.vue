@@ -5,14 +5,17 @@
         <!--首页头部-->
         <HeaderTop :title="address.name">
           <template v-slot:left>
-            <span class="header_search">
+            <router-link class="header_search" to='/search'>
               <i class="iconfont icon-sousuo"></i>
-            </span>
+            </router-link>
           </template>
           <template v-slot:right>
-            <span class="header_login">
-            <span class="header_login_text">登录|注册</span>
-          </span>
+            <router-link class="header_login" :to="userInfo._id?'/userInfo':'/profile'">
+            <span class="header_login_text" v-if="!userInfo._id">登录|注册</span>
+            <span class="header_login_text" v-else>
+              <i class="iconfont icon-person"></i>
+            </span>
+          </router-link>
           </template>
         </HeaderTop>
         <!--首页导航-->
@@ -55,8 +58,8 @@ export default {
     }
   },
   mounted(){
-    this.getCategorys();
-    this.$store.dispatch('getShops');
+    this.getCategorys();          //mapActions
+    this.$store.dispatch('getShops'); //老实dispatch的
     
   },
   watch:{
@@ -75,7 +78,7 @@ export default {
     }
   },
   computed:{
-    ...mapState(['address','categorys']),
+    ...mapState(['address','categorys','userInfo']),
     //把食品分类数组在计算属性里面变成二维数组
     categorysTo2D(){
       let {categorys} = this;

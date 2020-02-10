@@ -1,5 +1,5 @@
 // 接口请求函数
-import {request} from './request'
+import {request,ajax} from './request'
 
 
 // [1、根据经纬度获取位置详情](#1根据经纬度获取位置详情)<br/>
@@ -60,11 +60,14 @@ export const reqPwd = (name,pwd,captcha) => request({
     
     baseConfig:{
         url:`/login_pwd`,
-        methods:'post',
+        method:'POST',
         params:{
             name,
             pwd,
             captcha
+        },
+        headers:{
+            'Content-Type':'application/x-www-form-urlencoded'
         }
     },
     success:res=>res,
@@ -85,7 +88,7 @@ export const reqPhone = (phone,code) => request({
     
     baseConfig:{
         url:`/login_sms`,
-        methods:'post',
+        method:'POST',
         params:{
             phone,
             code
@@ -112,5 +115,18 @@ export const reqLogout = () => request({
     success:res=>res,
     failure:err=>err
 })
+
+//获取商家信息
+export const reqShopInfo = () => ajax('/info')
+
+/**
+ * 获取商家评价数组
+ */
+export const reqShopRatings = () => ajax('/ratings')
+
+/**
+ * 获取商家商品数组
+ */
+export const reqShopGoods = () => ajax('/goods')
 
 

@@ -40,7 +40,7 @@
                 </section>
                 <section class="login_message">
                   <input type="text" maxlength="11" placeholder="验证码" v-model="captcha">
-                  <img class="get_verification" src="http://localhost:4000/captcha" alt="captcha" @click="getCaptcha">
+                  <img class="get_verification" src="http://localhost:4000/captcha" alt="captcha" @click="getCaptcha" ref="captcha">
                 </section>
               </section>
             </div>
@@ -96,6 +96,7 @@ export default {
 
       //2.向后台请求短信验证码
       const res = await reqMessage(this.phone);
+      
       if (res.code === 1) { //失败时
         //显示提示
         slotWord(res.msg)
@@ -112,7 +113,9 @@ export default {
       this.showTip = true;
       this.alertWord = text;
     },
-    login() {
+    async login() {
+
+      let res;
       //1.前台表单验证
       
       if (this.loginWay) {   //短信登陆
@@ -120,32 +123,61 @@ export default {
         if (!rightPhone) {
           //手机号不正确
           this.slotWord('手机号不正确')
+          return 
         }else if(!/^\d{6}$/.test(code)){
           //短信验证码不正确
           this.slotWord('短信验证码不正确')
+          return
         }
 
-
         //发送ajax请求短信登陆
-        
+        res = await reqPhone(phone,code)
       } else {        //用户名登陆
         const {name,pwd,captcha} = this
         if (!name) {
           //用户名不正确
           this.slotWord('用户名不正确')
+          return
         } else if (!pwd){
           //密码不正确
           this.slotWord('密码不正确')
+          return
         } else if (!captcha) {
           //图形验证码不正确
           this.slotWord('图形验证码不正确')
+          return
         }
 
         //发送ajax请求密码登陆
+        res = await reqPwd(name,pwd,captcha);
+        
       }
+      //停止倒计时
+        if (this.lastTime) {
+          this.lastTime = 0;
+          clearInterval(this.timer)
+          this.timer = 0;
+        }
+
+      //根据结果数据处理
+      if(res.code === 0){
+          const user = res.data
+          //将user保存到vuex的state里面
+          this.$store.dispatch('recordUser',user)
+
+          //跳转路由到个人中心界面
+          this.$router.replace('/profile')
+        } else {
+          const msg = res.msg
+          //显示新的图形验证码
+          this.getCaptcha()
+          //显示警告提示
+          this.slotWord(msg)
+        }
     },
-    getCaptcha(event){
-      event.target.src = 'http://localhost:4000/captcha?time='+Date.now()
+    getCaptcha(){
+      //this.event.target.src = xxxxxxx
+      this.$refs.captcha.src = 'http://localhost:4000/captcha?time='+Date.now()
     },
     tipClose() {          //弹窗点击关闭
       this.showTip = false;
