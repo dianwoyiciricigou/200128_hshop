@@ -86,7 +86,7 @@
       }
     },
     mounted () {
-      this.$store.dispatch('getShopRatings', () => {
+      this.$store.dispatch('getShopRatings', () => {    //写在callback里面，异步获取之后就渲染出来
         this.$nextTick(() => {
           new BScroll(this.$refs.ratings, {
             click: true

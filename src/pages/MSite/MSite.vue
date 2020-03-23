@@ -84,7 +84,7 @@ export default {
       let {categorys} = this;
       let arr = [];
       let num = categorys.length / 8 - 1;
-      for (let i = 0; i < num+1; i++) {
+      for (let i = 0; i < num + 1; i++) {
         arr[i] = [];
       }
       arr.forEach((item,index)=>{
